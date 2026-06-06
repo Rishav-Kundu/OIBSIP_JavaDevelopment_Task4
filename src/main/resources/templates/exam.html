@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <title>Online Examination</title>
+
+    <script>
+        function startTimer(seconds){
+
+            var el = document.getElementById('timer');
+            var remaining = seconds;
+
+            updateTimer();
+
+            var iv = setInterval(function(){
+
+                remaining--;
+
+                if(remaining <= 0){
+                    clearInterval(iv);
+                    alert("Time is up! Exam will be submitted automatically.");
+                    document.getElementById('examForm').submit();
+                }
+
+                updateTimer();
+
+            },1000);
+
+            function updateTimer(){
+
+                var min = Math.floor(remaining/60);
+                var sec = remaining%60;
+
+                el.innerText =
+                    min + ":" + ('0'+sec).slice(-2);
+
+                if(remaining <= 60){
+                    el.style.color = "#ef4444";
+                }
+            }
+        }
+
+        window.onload = function(){
+            startTimer([[${timeSeconds}]]);
+        };
+
+        document.addEventListener("click", function(e){
+
+            if(e.target.type === "radio"){
+                setTimeout(function(){
+                    document.body.focus();
+                },10);
+            }
+
+        });
+    </script>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:"Segoe UI",sans-serif;
+        }
+
+        body{
+            background:#f5f7fb;
+            padding:30px;
+        }
+
+        .header{
+            background:white;
+            border-radius:18px;
+            padding:25px;
+            margin-bottom:25px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.08);
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .header h1{
+            color:#111827;
+            font-size:32px;
+        }
+
+        .header p{
+            color:#6b7280;
+            margin-top:6px;
+        }
+
+        .timer-box{
+            background:#2563eb;
+            color:white;
+            padding:15px 25px;
+            border-radius:12px;
+            text-align:center;
+        }
+
+        .timer-label{
+            font-size:14px;
+        }
+
+        #timer{
+            font-size:28px;
+            font-weight:bold;
+        }
+
+        .instructions{
+            background:#eff6ff;
+            border-left:5px solid #2563eb;
+            padding:18px;
+            border-radius:12px;
+            margin-bottom:25px;
+        }
+
+        .instructions ul{
+            margin-left:20px;
+            margin-top:10px;
+        }
+
+        .instructions li{
+            margin-bottom:8px;
+        }
+
+        .question-card{
+            background:white;
+            padding:25px;
+            border-radius:18px;
+            margin-bottom:20px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .question-title{
+            font-size:18px;
+            font-weight:600;
+            margin-bottom:15px;
+            color:#111827;
+        }
+
+        .option{
+            display:block;
+            margin-bottom:12px;
+            padding:12px;
+            border:1px solid #d1d5db;
+            border-radius:10px;
+            cursor:pointer;
+            transition:0.2s;
+        }
+
+        .option:hover{
+            background:#f8fafc;
+        }
+
+        .option input{
+            margin-right:10px;
+        }
+
+        .option input[type="radio"]{
+            pointer-events:auto;
+        }
+
+        .option input[type="radio"]:focus{
+            outline:none;
+        }
+
+        .submit-section{
+            text-align:center;
+            margin-top:30px;
+            margin-bottom:40px;
+        }
+
+        .submit-btn{
+            background:#2563eb;
+            color:white;
+            border:none;
+            padding:15px 40px;
+            font-size:18px;
+            font-weight:600;
+            border-radius:12px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .submit-btn:hover{
+            background:#1d4ed8;
+        }
+
+    </style>
+
+</head>
+
+<body tabindex="-1">
+
+<div class="header">
+
+    <div>
+        <h1>Online Examination</h1>
+        <p>Answer all questions before the timer ends.</p>
+    </div>
+
+    <div class="timer-box">
+        <div class="timer-label">Time Remaining</div>
+        <div id="timer"></div>
+    </div>
+
+</div>
+
+<div class="instructions">
+
+    <strong>Instructions</strong>
+
+    <ul>
+        <li>Total Questions: 10</li>
+        <li>Each question carries 1 mark.</li>
+        <li>You can attempt the exam only once.</li>
+        <li>The exam will be submitted automatically when time ends.</li>
+    </ul>
+
+</div>
+
+<form id="examForm"
+      action="/submitExam"
+      method="post">
+
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}" />
+
+    <div th:each="q, stat : ${questions}"
+         class="question-card">
+
+        <div class="question-title">
+            Q<span th:text="${stat.count}"></span>.
+            <span th:text="${q.questionText}"></span>
+        </div>
+
+        <label class="option">
+            <input type="radio"
+                   th:name="${'q_'+q.id}"
+                   th:value="${q.optionA}"
+                   required>
+            <span th:text="${q.optionA}"></span>
+        </label>
+
+        <label class="option">
+            <input type="radio"
+                   th:name="${'q_'+q.id}"
+                   th:value="${q.optionB}">
+            <span th:text="${q.optionB}"></span>
+        </label>
+
+        <label class="option">
+            <input type="radio"
+                   th:name="${'q_'+q.id}"
+                   th:value="${q.optionC}">
+            <span th:text="${q.optionC}"></span>
+        </label>
+
+        <label class="option">
+            <input type="radio"
+                   th:name="${'q_'+q.id}"
+                   th:value="${q.optionD}">
+            <span th:text="${q.optionD}"></span>
+        </label>
+
+    </div>
+
+    <div class="submit-section">
+
+        <button type="submit"
+                class="submit-btn">
+            Submit Exam
+        </button>
+
+    </div>
+
+</form>
+
+</body>
+</html>

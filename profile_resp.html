@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Dashboard</title>
+    <script>function goBack(){history.back();}</script>
+    <style>ul{list-style:none;padding:0} li{margin:8px 0}</style>
+</head>
+<body>
+<h2>Dashboard</h2>
+<p>Welcome, <span>ChangedName</span> (<span>student1</span>)</p>
+<ul>
+    <li><a href="/profile">Update Profile</a></li>
+    <li><a href="/startExam">Start Exam</a></li>
+    <li><a href="/viewResult">View Result</a></li>
+    <li>
+        <form action="/logout" method="post" style="display:inline">
+            <input type="hidden" name="_csrf" value="TFeN3HkXSp8xVUeLyFDHQyW7JSws9PpYZP1PDMYpsPwLx75NKmG470EifqYcNiLpqX3zJxHYCBRPx5x1Upl5Of8Qhs08ptoo" />
+            <button type="submit">Logout</button>
+        </form>
+    </li>
+    <li><button onclick="goBack()">Back</button></li>
+</ul>
+</body>
+</html>

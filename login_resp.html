@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="_csrf" content="_aTkZgTE0ImBBWdfWQVCX7tZ7BrpNPBwocCPXPJbDfoUNkWEyMbUADCn5uysPQM9Pyh2OdppwXvbUZVdkqLuacBpOckmVHKw" />
+    <meta name="_csrf_header" content="X-CSRF-TOKEN" />
+    <title>Login</title>
+    <style>label{display:block;margin-top:8px}</style>
+    <script src="/js/csrf.js" defer></script>
+</head>
+<body>
+<h2>Login</h2>
+
+<form action="/login" method="post"><input type="hidden" name="_csrf" value="_aTkZgTE0ImBBWdfWQVCX7tZ7BrpNPBwocCPXPJbDfoUNkWEyMbUADCn5uysPQM9Pyh2OdppwXvbUZVdkqLuacBpOckmVHKw"/>
+    <input type="hidden" name="_csrf" value="_aTkZgTE0ImBBWdfWQVCX7tZ7BrpNPBwocCPXPJbDfoUNkWEyMbUADCn5uysPQM9Pyh2OdppwXvbUZVdkqLuacBpOckmVHKw" />
+    <label>Username: <input type="text" name="username" required></label>
+    <label>Password: <input type="password" name="password" required></label>
+    <button type="submit">Login</button>
+</form>
+</body>
+</html>

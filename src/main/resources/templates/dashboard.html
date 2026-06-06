@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Dashboard</title>
+
+```
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:"Segoe UI",sans-serif;
+    }
+
+    body{
+        min-height:100vh;
+        background:#f5f7fb;
+        display:flex;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar{
+        width:280px;
+        background:linear-gradient(180deg,#3b5bdb,#2563eb);
+        color:white;
+        display:flex;
+        flex-direction:column;
+        padding:30px 20px;
+    }
+
+    .logo{
+        margin-bottom:40px;
+    }
+
+    .logo h2{
+        font-size:28px;
+        margin-bottom:5px;
+    }
+
+    .logo p{
+        opacity:0.8;
+    }
+
+    .nav-links{
+        display:flex;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .nav-links a{
+        text-decoration:none;
+        color:white;
+        padding:15px 20px;
+        border-radius:12px;
+        transition:0.3s;
+        font-size:17px;
+    }
+
+    .nav-links a:hover{
+        background:rgba(255,255,255,0.15);
+    }
+
+    .logout-section{
+        margin-top:auto;
+    }
+
+    .logout-btn{
+        width:100%;
+        padding:15px;
+        border:none;
+        border-radius:12px;
+        background:rgba(255,255,255,0.12);
+        color:white;
+        cursor:pointer;
+        font-size:16px;
+        transition:0.3s;
+    }
+
+    .logout-btn:hover{
+        background:rgba(255,255,255,0.25);
+    }
+
+    /* MAIN CONTENT */
+
+    .main{
+        flex:1;
+        padding:40px;
+    }
+
+    .top-header{
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-start;
+        gap:25px;
+        margin-bottom:15px;
+    }
+
+    .welcome{
+        flex:1;
+        padding-top:10px;
+    }
+
+    .welcome h1{
+        font-size:48px;
+        color:#111827;
+        margin-bottom:10px;
+    }
+
+    .welcome p{
+        color:#6b7280;
+        font-size:18px;
+    }
+
+    .user-box{
+        min-width:300px;
+        background:white;
+        padding:25px;
+        border-radius:18px;
+        box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .user-box h3{
+        color:#2563eb;
+        margin-bottom:18px;
+    }
+
+    .user-box p{
+        color:#374151;
+        margin-bottom:12px;
+        font-size:15px;
+    }
+
+    .success{
+        background:#ecfdf3;
+        border:1px solid #86efac;
+        color:#166534;
+        padding:18px;
+        border-radius:14px;
+        margin-bottom:25px;
+        font-weight:600;
+    }
+
+    .actions-title{
+        font-size:28px;
+        margin-top:10px;
+        margin-bottom:20px;
+        color:#111827;
+    }
+
+    .cards{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+        gap:25px;
+    }
+
+    .card{
+        background:white;
+        border-radius:18px;
+        padding:25px;
+        box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .card h3{
+        margin-bottom:10px;
+        color:#111827;
+    }
+
+    .card p{
+        color:#6b7280;
+        margin-bottom:20px;
+    }
+
+    .card a{
+        display:block;
+        text-align:center;
+        text-decoration:none;
+        background:#2563eb;
+        color:white;
+        padding:12px;
+        border-radius:10px;
+        font-weight:600;
+        transition:0.3s;
+    }
+
+    .card a:hover{
+        background:#1d4ed8;
+    }
+
+    @media(max-width:900px){
+
+        body{
+            flex-direction:column;
+        }
+
+        .sidebar{
+            width:100%;
+        }
+
+        .top-header{
+            flex-direction:column;
+        }
+
+        .user-box{
+            width:100%;
+        }
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+```
+<div class="logo">
+    <h2>Online Exam</h2>
+    <p>Student Portal</p>
+</div>
+
+<div class="nav-links">
+    <a href="/dashboard">Dashboard</a>
+    <a href="/profile">Update Profile</a>
+    <a href="/startExam">Start Exam</a>
+    <a href="/viewResult">View Result</a>
+</div>
+
+<div class="logout-section">
+    <form action="/logout" method="post">
+
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
+
+        <button class="logout-btn" type="submit">
+            Logout
+        </button>
+
+    </form>
+</div>
+```
+
+</div>
+
+<div class="main">
+
+```
+<div class="top-header">
+
+    <div class="welcome">
+
+        <h1>
+            Welcome,
+            <span th:text="${user.name}">User</span>
+        </h1>
+
+        <p>
+            Access all examination features from one place. 
+        </p>
+        <p>
+            Update your profile, attempt the examination, and review your results.
+        </p>
+
+    </div>
+
+    <div class="user-box">
+
+        <h3>Exam Instructions</h3>
+
+        <p>
+            <strong>Total Time:</strong> 5 Minutes
+        </p>
+
+        <p>
+            <strong>Total Questions:</strong> 10
+        </p>
+
+        <p>
+            <strong>Total Marks:</strong> 10
+        </p>
+
+        <p>
+            <strong>Attempts Allowed:</strong> 1
+        </p>
+
+    </div>
+
+</div>
+
+<div th:if="${param.submitted}" class="success">
+    Exam submitted successfully.
+    Click "View Result" to see your score.
+</div>
+
+<h2 class="actions-title">
+    Quick Actions
+</h2>
+
+<div class="cards">
+
+    <div class="card">
+        <h3>Update Profile</h3>
+
+        <p>
+            Update your personal information.
+        </p>
+
+        <a href="/profile">
+            Update Profile
+        </a>
+    </div>
+
+    <div class="card">
+        <h3>Start Exam</h3>
+
+        <p>
+            Begin the exam and test your knowledge.
+        </p>
+
+        <a href="/startExam">
+            Start Exam
+        </a>
+    </div>
+
+    <div class="card">
+        <h3>View Result</h3>
+
+        <p>
+            View your latest examination result.
+        </p>
+
+        <a href="/viewResult">
+            View Result
+        </a>
+    </div>
+
+</div>
+```
+
+</div>
+
+</body>
+</html>

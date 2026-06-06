@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Sign Up</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .card {
+            width: min(640px, 100%);
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            margin-top: 6px;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .hint {
+            color: #475569;
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+        }
+
+        .error {
+            color: #b91c1c;
+            margin-bottom: 14px;
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button, a.button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            border-radius: 999px;
+            border: none;
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        button {
+            background: #0f766e;
+            color: white;
+        }
+
+        a.button {
+            background: transparent;
+            color: #0f766e;
+            border: 2px solid #0f766e;
+        }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <h2>Create Account</h2>
+        <p class="hint">Enter the same details you would update in your profile. Your name becomes your username and your password becomes your login password.</p>
+        <div th:if="${error}" class="error">[[${error}]]</div>
+        <form th:action="@{/signup}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <label>Name
+                <input type="text" name="name" required>
+            </label>
+            <label>Email
+                <input type="email" name="email">
+            </label>
+            <label>Phone
+                <input type="text" name="phone">
+            </label>
+            <label>Roll No
+                <input type="text" name="rollNo">
+            </label>
+            <label>Password
+                <input type="password" name="password" required>
+            </label>
+            <div class="actions">
+                <button type="submit">Sign Up</button>
+                <a class="button" th:href="@{/}">Back</a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

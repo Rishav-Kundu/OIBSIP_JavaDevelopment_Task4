@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>View Result</title>
+
+```
+<style>
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:"Segoe UI",sans-serif;
+    }
+
+    body{
+        background:#f5f7fb;
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:30px;
+    }
+
+    .result-container{
+        width:100%;
+        max-width:900px;
+    }
+
+    .result-card{
+        background:white;
+        border-radius:22px;
+        padding:40px;
+        box-shadow:0 8px 25px rgba(0,0,0,0.08);
+        text-align:center;
+    }
+
+    .title{
+        color:#111827;
+        font-size:36px;
+        margin-bottom:25px;
+    }
+
+    .score-circle{
+        width:180px;
+        height:180px;
+        border-radius:50%;
+        background:linear-gradient(135deg,#2563eb,#3b82f6);
+        color:white;
+        margin:0 auto 30px auto;
+
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+
+        box-shadow:0 10px 20px rgba(37,99,235,0.25);
+    }
+
+    .score-value{
+        font-size:52px;
+        font-weight:bold;
+    }
+
+    .score-text{
+        font-size:18px;
+    }
+
+    .details{
+        margin-top:25px;
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+        gap:20px;
+    }
+
+    .detail-card{
+        background:#f8fafc;
+        padding:20px;
+        border-radius:15px;
+    }
+
+    .detail-card h3{
+        color:#2563eb;
+        margin-bottom:10px;
+    }
+
+    .detail-card p{
+        color:#374151;
+        font-size:17px;
+    }
+
+    .no-result{
+        background:white;
+        border-radius:22px;
+        padding:40px;
+        text-align:center;
+        box-shadow:0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .dashboard-btn{
+        display:inline-block;
+        margin-top:35px;
+        text-decoration:none;
+        background:#2563eb;
+        color:white;
+        padding:14px 35px;
+        border-radius:12px;
+        font-size:16px;
+        font-weight:600;
+        transition:0.3s;
+    }
+
+    .dashboard-btn:hover{
+        background:#1d4ed8;
+    }
+
+</style>
+```
+
+</head>
+<body>
+
+<div class="result-container">
+
+```
+<div th:if="${result != null}" class="result-card">
+
+    <h1 class="title">Examination Result</h1>
+
+    <div class="score-circle">
+
+        <div class="score-value"
+             th:text="${result.score}">
+            0
+        </div>
+
+        <div class="score-text">
+            Marks
+        </div>
+
+    </div>
+
+    <div class="details">
+
+        <div class="detail-card">
+            <h3>Username</h3>
+            <p th:text="${result.username}"></p>
+        </div>
+
+        <div class="detail-card">
+            <h3>Total Questions</h3>
+            <p th:text="${result.totalQuestions}"></p>
+        </div>
+
+        <div class="detail-card">
+            <h3>Percentage</h3>
+            <p th:text="${#numbers.formatDecimal((result.score * 100.0) / result.totalQuestions, 1, 2)} + '%'">
+            </p>
+        </div>
+
+        <div class="detail-card">
+            <h3>Submitted On</h3>
+            <p th:text="${result.submittedAt}"></p>
+        </div>
+
+    </div>
+
+    <a href="/dashboard"
+       class="dashboard-btn">
+        Back to Dashboard
+    </a>
+
+</div>
+
+<div th:unless="${result != null}"
+     class="no-result">
+
+    <h1>No Result Found</h1>
+
+    <p style="margin-top:15px;color:#6b7280;">
+        You have not attempted the examination yet.
+    </p>
+
+    <a href="/dashboard"
+       class="dashboard-btn">
+        Back to Dashboard
+    </a>
+
+</div>
+```
+
+</div>
+
+</body>
+</html>

@@ -120,7 +120,7 @@ src
 ## Demo Video
 
 Demo Video Link:
-(Add YouTube or LinkedIn video link here)
+https://youtu.be/VzZQJJ7SfQg
 
 ---
 

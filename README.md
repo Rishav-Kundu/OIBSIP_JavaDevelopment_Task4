@@ -117,20 +117,6 @@ src
 
 ---
 
-## Screenshots
-
-Add screenshots of the following pages:
-
-* Home Page
-* Login Page
-* Registration Page
-* Dashboard
-* Profile Page
-* Examination Page
-* Result Page
-
----
-
 ## Demo Video
 
 Demo Video Link:
@@ -141,7 +127,7 @@ Demo Video Link:
 ## GitHub Repository
 
 Repository Link:
-https://github.com/Rishav-Kundu/online-examination-system
+https://github.com/Rishav-Kundu/OIBSIP_JavaDevelopment_Task4.git
 
 ---
 
